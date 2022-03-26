@@ -6,7 +6,7 @@ import { ApiService } from '../services/api.service';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage implements OnInit{
+export class HomePage implements OnInit {
 
   urlImg = 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/';
 
@@ -15,14 +15,15 @@ export class HomePage implements OnInit{
   count: number = 0;
   next: string = '';
   previous: string = '';
-
-  constructor(public apiService: ApiService) {}
+  paginaAtual:number = 1;
+  totalPaginas: number =0;
+  constructor(public apiService: ApiService) { }
 
   ngOnInit(): void {
     this.buscarPokemon(this.apiService.urlApi);
   }
-  
-  buscarPokemon(url: string){
+
+  buscarPokemon(url: string) {
     this.listaPokemon = [];
     this.apiService.buscarListaPokemon(url).subscribe(retorno => {
       this.count = retorno['count'];
@@ -32,9 +33,23 @@ export class HomePage implements OnInit{
       retorno['results'].forEach(pokemon => {
         this.apiService.buscarDadosPokemon(pokemon['url']).subscribe(dadosPokemon => {
           this.listaPokemon.push(dadosPokemon);
+          this.listaPokemon.sort((a,b)=> a['id'] - b['id']);
         })
       })
     });
   }
 
+  proximaPagina(url:string){
+    this.paginaAtual = this.paginaAtual+1;
+    this.buscarPokemon(url);
+  }
+
+  paginaAnterior(url: string){
+    this.paginaAtual = this.paginaAtual-1;
+    this.buscarPokemon(url);
+  }
+
+  totalPagina(numero:number){
+   return this.totalPaginas = Math.ceil(numero / 20);
+  }
 }

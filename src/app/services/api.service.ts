@@ -4,7 +4,7 @@ import { element } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
-});
+})
 export class ApiService {
 
   urlApi = 'https://pokeapi.co/api/v2/pokemon';

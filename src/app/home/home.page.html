@@ -1,7 +1,9 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Poke Api
+      <div class="title">
+        Poke Api
+      </div>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -30,17 +32,17 @@
 <ion-footer>
   <ion-toolbar>
     
-    <ion-buttons *ngIf="previous != null" slot="start">
-      <ion-button (click)="buscarPokemon(previous)">
+    <ion-buttons *ngIf="previous" slot="start">
+      <ion-button (click)="paginaAnterior(previous)">
         <ion-icon slot="icon-only" name="return-down-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
 
-    <ion-title class="ion-text-center" slot="end">{{count}}</ion-title>
-    <ion-title class="ion-text-center" slot="start">{{count}}</ion-title>
+    
+    <ion-title class="ion-text-center title" slot="start">{{ paginaAtual }}/{{ totalPagina(count) }}</ion-title>
 
-    <ion-buttons *ngIf="next != null" slot="end">
-      <ion-button (click)="buscarPokemon(next)">
+    <ion-buttons *ngIf="next" slot="end">
+      <ion-button (click)="proximaPagina(next)">
         <ion-icon slot="icon-only" name="return-down-forward-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
